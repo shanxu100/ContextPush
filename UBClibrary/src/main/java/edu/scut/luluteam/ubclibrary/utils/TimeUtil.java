@@ -41,12 +41,13 @@ public class TimeUtil {
 
     /**
      * 得到现在时间与输入时间之间的差值（秒）
+     *
      * @param inputTime
      * @return
      */
     public static long getDiffTime(String inputTime, String pattern) throws ParseException {
         Date inputDate = new SimpleDateFormat(pattern).parse(inputTime);
-        return (System.currentTimeMillis()-inputDate.getTime())/1000;
+        return (System.currentTimeMillis() - inputDate.getTime()) / 1000;
     }
 
     public static void main(String[] args) {

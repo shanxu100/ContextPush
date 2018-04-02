@@ -13,10 +13,10 @@ import java.lang.reflect.Field;
 
 public class DisplayUtil {
 
-    private static int SCREENWIDTH;
-    private static int SCREENHEIGHT;
-    private static int DensityDpi;
-    private static int StatusBarHeight;
+    private static int SCREEN_WIDTH;
+    private static int SCREEN_HEIGHT;
+    private static int DENSITY_DPI;
+    private static int STATUS_BAR_HEIGHT;
 
     //但例模式：饿汉式
     private static DisplayUtil displayUtil = new DisplayUtil();
@@ -27,19 +27,19 @@ public class DisplayUtil {
     private static String TAG = "DisplayUtil";
 
     public static int getScreenWidth() {
-        return SCREENWIDTH;
+        return SCREEN_WIDTH;
     }
 
     public static int getScreenHeight() {
-        return SCREENHEIGHT;
+        return SCREEN_HEIGHT;
     }
 
     public static int getDensityDpi() {
-        return DensityDpi;
+        return DENSITY_DPI;
     }
 
     public static int getStatusBarHeight() {
-        return StatusBarHeight;
+        return STATUS_BAR_HEIGHT;
     }
 
 
@@ -49,18 +49,15 @@ public class DisplayUtil {
         displayUtil.saveStatusBarHeight(mContext);
     }
 
-    private DisplayUtil() {
-    }
-
 
     /**
      * 获取并保存屏幕大小
      *
      * @param mContext
      */
-    public void saveScreenInfo(Context mContext) {
+    private void saveScreenInfo(Context mContext) {
 
-        if (SCREENWIDTH != 0 && SCREENHEIGHT != 0) {
+        if (SCREEN_WIDTH != 0 && SCREEN_HEIGHT != 0) {
             return;
         }
 
@@ -68,15 +65,16 @@ public class DisplayUtil {
         DisplayMetrics metric = new DisplayMetrics();
         WindowManager mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mWindowManager.getDefaultDisplay().getMetrics(metric);
-        //通过Activity获取屏幕信息
-        //((Activity) mContext).getWindowManager().getDefaultDisplay().getMetrics(metric);
-        SCREENWIDTH = metric.widthPixels;     // 屏幕宽度（像素）
-        SCREENHEIGHT = metric.heightPixels;   // 屏幕高度（像素）
-        DensityDpi = metric.densityDpi;
 
-        Log.d(TAG, "SCREENWIDTH:\t" + SCREENWIDTH +
-                "\tSCREENHEIGHT:\t" + SCREENHEIGHT +
-                "\tDensityDpi:\t" + DensityDpi);
+        // 屏幕宽度（像素）
+        SCREEN_WIDTH = metric.widthPixels;
+        // 屏幕高度（像素）
+        SCREEN_HEIGHT = metric.heightPixels;
+        DENSITY_DPI = metric.densityDpi;
+
+        Log.d(TAG, "SCREEN_WIDTH:\t" + SCREEN_WIDTH +
+                "\tSCREEN_HEIGHT:\t" + SCREEN_HEIGHT +
+                "\tDENSITY_DPI:\t" + DENSITY_DPI);
     }
 
     /**
@@ -85,17 +83,17 @@ public class DisplayUtil {
      * @return 返回状态栏高度的像素值。
      */
     private int saveStatusBarHeight(Context mContext) {
-        if (StatusBarHeight == 0) {
+        if (STATUS_BAR_HEIGHT == 0) {
             try {
                 Class<?> c = Class.forName("com.android.internal.R$dimen");
                 Object o = c.newInstance();
                 Field field = c.getField("status_bar_height");
                 int x = (Integer) field.get(o);
-                StatusBarHeight = mContext.getResources().getDimensionPixelSize(x);
+                STATUS_BAR_HEIGHT = mContext.getResources().getDimensionPixelSize(x);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return StatusBarHeight;
+        return STATUS_BAR_HEIGHT;
     }
 }
