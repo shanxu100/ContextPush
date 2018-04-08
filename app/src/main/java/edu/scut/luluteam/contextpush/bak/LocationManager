@@ -1,0 +1,112 @@
+package edu.scut.luluteam.contextpush;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
+
+
+/**
+ * 在这里制定策略，并按照策略 采集位置信息
+ *
+ * @author Guan
+ * @date Created on 2018/4/3
+ */
+public class LocationManager {
+
+    private static LocationManager locationManager;
+    private static final String TAG = "LocationManager";
+
+    private LocationService locationService = null;
+    private MyLocationListener myListener = null;
+    private Context context;
+
+    private LocationManager(Context context) {
+        this.context = context;
+        locationService = new LocationService(context);
+        myListener = new MyLocationListener();
+    }
+
+    /**
+     * 启动定位
+     */
+    public void start() {
+        locationService.registerListener(myListener);
+        onStrategy();
+
+    }
+
+    public void stop() {
+        locationService.unregisterListener(myListener);
+        locationService.stop();
+    }
+
+    /**
+     * 获取单例
+     *
+     * @return
+     */
+    public static LocationManager getInstance(Context context) {
+        if (locationManager == null) {
+            synchronized (LocationManager.class) {
+                if (locationManager == null) {
+                    locationManager = new LocationManager(context);
+                }
+            }
+        }
+        return locationManager;
+    }
+
+
+    /**
+     * 制定策略，开始定位
+     */
+    private void onStrategy() {
+        locationService.start();
+    }
+
+
+    /**
+     * 接口回调监听
+     */
+    private static class MyLocationListener extends BDAbstractLocationListener {
+
+
+        /**
+         * 这里是主线程
+         *
+         * @param location
+         */
+        @Override
+        public void onReceiveLocation(BDLocation location) {
+            //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
+            //以下只列举部分获取经纬度相关（常用）的结果信息
+            //更多结果信息获取说明，请参照类参考中BDLocation类中的说明
+
+            //获取纬度信息
+            double latitude = location.getLatitude();
+            //获取经度信息
+            double longitude = location.getLongitude();
+            //获取定位精度，默认值为0.0f
+            float radius = location.getRadius();
+
+            //获取经纬度坐标类型，以LocationClientOption中设置过的坐标类型为准
+            String coorType = location.getCoorType();
+
+            //获取定位类型、定位错误返回码，具体信息可参照类参考中BDLocation类中的说明
+            int errorCode = location.getLocType();
+//            try {
+//                Thread.sleep(25000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            Log.e("TAG", "定位成功：" + location.toString() + "  Thread:" + Thread.currentThread().toString() + " " + Thread.currentThread().getName() + "  " + Thread.currentThread().getId());
+
+        }
+
+
+    }
+}

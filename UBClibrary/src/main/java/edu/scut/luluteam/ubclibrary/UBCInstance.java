@@ -2,7 +2,7 @@ package edu.scut.luluteam.ubclibrary;
 
 import android.app.Application;
 
-import edu.scut.luluteam.ubclibrary.constant.ContextHolder;
+import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
 /**
  * @author Guan
@@ -11,9 +11,11 @@ import edu.scut.luluteam.ubclibrary.constant.ContextHolder;
 public class UBCInstance {
 
     private static UBCInstance instance;
+    private UBCNative ubcNative;
 
-    public UBCInstance(Application context) {
-        ContextHolder.context = context;
+    private UBCInstance(Application context) {
+        AppHolder.appContext = context;
+        ubcNative=new UBCNative();
     }
 
 
@@ -45,7 +47,7 @@ public class UBCInstance {
      */
     public void start()
     {
-
+        ubcNative.start();
     }
 
 }
