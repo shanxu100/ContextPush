@@ -56,7 +56,10 @@ public class GeoFenceService extends Service implements IGeoFenceView {
          * 在成功加载 地理围栏 后，注册监听
          */
         mGeoFenceReceiver = new GeoFenceReceiver();
+        // 2. 设置接收广播的类型
+        //监听网络变化
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        //监听地理围栏
         filter.addAction(GEOFENCE_BROADCAST_ACTION);
         registerReceiver(mGeoFenceReceiver, filter);
     }
