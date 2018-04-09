@@ -1,5 +1,6 @@
 package edu.scut.luluteam.contextpush;
 
+import android.content.Intent;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.scut.luluteam.ubclibrary.UBCInstance;
-import edu.scut.luluteam.ubclibrary.collection.model.manager.LocationManagerTest;
+import edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceService;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
         test1_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                UBCInstance.start(getApplication());
+
 //                LocationManager.getInstance(getApplication()).start();
                 UBCInstance.start(getApplication());
+//                Intent geoFenceIntent = new Intent(getApplicationContext(), GeoFenceService.class);
+//                startService(geoFenceIntent);
 
             }
         });
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                LocationManager.getInstance(getApplication()).stop();
+
+                Intent geoFenceIntent = new Intent(getApplicationContext(), GeoFenceService.class);
+                stopService(geoFenceIntent);
             }
         });
     }

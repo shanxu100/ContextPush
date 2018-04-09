@@ -1,11 +1,13 @@
 package edu.scut.luluteam.ubclibrary;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import edu.scut.luluteam.ubclibrary.collection.model.manager.LocationManagerTest;
+import edu.scut.luluteam.ubclibrary.collection.model.UBCLocation;
+import edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceService;
 import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
 /**
@@ -17,7 +19,7 @@ public class UBCNative {
 
     private static final String TAG = "UBCNative";
 
-    private LocationManagerTest locationManagerTest;
+    private UBCLocation UBCLocation;
 
     public UBCNative() {
 
@@ -28,15 +30,10 @@ public class UBCNative {
             return;
         }
 
-//        Intent intent = new Intent(AppHolder.appContext, MyIntentService.class);
-//        (AppHolder.appContext).startService(intent);
-
-        locationManagerTest = new LocationManagerTest();
-        locationManagerTest.start();
-//        Log.e(TAG,AppHolder.appContext.getPackageName());
+        Intent geoFenceIntent = new Intent(AppHolder.appContext, GeoFenceService.class);
+        AppHolder.appContext.startService(geoFenceIntent);
 
     }
-
 
 
     /**

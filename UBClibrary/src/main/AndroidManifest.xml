@@ -2,17 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.scut.luluteam.ubclibrary">
 
-
-
     <application>
-
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="94484e164c3f1d56453000cc2fb142a5"/>
+            android:value="94484e164c3f1d56453000cc2fb142a5" />
 
         <service
-            android:name=".collection.view.service.MyIntentService"
-            android:exported="false"></service>
+            android:name=".collection.view.impl.GeoFenceService"
+            android:enabled="true"
+            android:exported="false" />
+        <service android:name="com.amap.api.location.APSService"></service>
+
+        <receiver
+            android:name=".collection.view.impl.GeoFenceReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
     </application>
 
 </manifest>

@@ -1,32 +1,63 @@
-package edu.scut.luluteam.ubclibrary.collection.model.manager;
+package edu.scut.luluteam.ubclibrary.collection.presenter.impl;
+
+import android.os.Handler;
+import android.os.Message;
 
 import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
 
-import edu.scut.luluteam.ubclibrary.constant.AppHolder;
+import edu.scut.luluteam.ubclibrary.collection.model.UBCGeoFence;
+import edu.scut.luluteam.ubclibrary.collection.model.UBCLocation;
+import edu.scut.luluteam.ubclibrary.collection.presenter.IPresenter;
+import edu.scut.luluteam.ubclibrary.collection.view.IGeoFenceView;
 
 /**
  * @author Guan
- * @date Created on 2018/4/8
+ * @date Created on 2018/4/2
  */
-public class LocationManagerTest {
-    private AMapLocationClient locationClient;
+public class Presenter implements IPresenter {
 
-    public LocationManagerTest() {
-        locationClient = new AMapLocationClient(AppHolder.appContext);
+    private UBCGeoFence geoFence;
+
+    private IGeoFenceView view;
+    private GeoFenceHandler mHandler;
+    private UBCLocation ubcLocation;
+
+
+    public Presenter(IGeoFenceView view) {
+        this.view = view;
+        mHandler = new GeoFenceHandler(this.view);
+        geoFence = new UBCGeoFence(this);
+        ubcLocation = new UBCLocation(this);
     }
 
-    public void start() {
-        AMapLocation location = locationClient.getLastKnownLocation();
+    public void startLocation() {
+        ubcLocation.start();
+    }
+
+    public void stopLocation() {
+        ubcLocation.stop();
+    }
+
+    public void startGeoFence() {
+        geoFence.start();
+    }
+
+    public void stopGeoFence() {
+        geoFence.stop();
+    }
+
+    @Override
+    public void onLocationInfo(AMapLocation location) {
         String result = getLocationStr(location);
         System.out.println(result);
     }
 
-    public void stop() {
-        if (null != locationClient) {
-            locationClient.onDestroy();
-            locationClient = null;
-        }
+    @Override
+    public void onFinishedLoadGeoFenceInfo() {
+        /**
+         * 通知service，说已经成功加载 预设的地理围栏
+         */
+        mHandler.sendEmptyMessage(0);
     }
 
     public synchronized static String getLocationStr(AMapLocation location) {
@@ -67,5 +98,22 @@ public class LocationManagerTest {
         //定位之后的回调时间
         //sb.append("回调时间: " + formatUTC(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss") + "\n");
         return sb.toString();
+    }
+
+
+    public static final class GeoFenceHandler extends Handler {
+        private IGeoFenceView view;
+
+        public GeoFenceHandler(IGeoFenceView view) {
+            super();
+            this.view = view;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0) {
+                view.onFinishedLoadGeoFence();
+            }
+        }
     }
 }
