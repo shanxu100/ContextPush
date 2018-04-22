@@ -1,6 +1,7 @@
 package edu.scut.luluteam.ubclibrary.collection.model;
 
 import android.Manifest;
+import android.app.AppOpsManager;
 import android.app.usage.UsageEvents;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
@@ -34,8 +35,8 @@ public class UBCUsageStats {
 
     public void appStats() {
         //检查权限
-        if (!CheckPermissionUtil.checkPermission(context, Manifest.permission.PACKAGE_USAGE_STATS)) {
-//            return;
+        if (!CheckPermissionUtil.checkSystemAppPermission(context, AppOpsManager.OPSTR_GET_USAGE_STATS)) {
+            return;
         }
         Calendar calendar = Calendar.getInstance();
         long endTime = calendar.getTimeInMillis();
@@ -70,7 +71,7 @@ public class UBCUsageStats {
         sb.append("printUsageStats:\n");
         for (UsageStats u : usageStatsList) {
             sb.append("Pkg: " + u.getPackageName() + "\t" + "ForegroundTime: "
-                    + u.getTotalTimeInForeground());
+                    + u.getTotalTimeInForeground() + "\n");
         }
         Log.i(TAG, sb.toString());
     }
