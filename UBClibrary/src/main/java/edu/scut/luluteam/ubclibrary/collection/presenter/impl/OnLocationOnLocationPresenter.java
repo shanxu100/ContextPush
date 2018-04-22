@@ -7,25 +7,45 @@ import com.amap.api.location.AMapLocation;
 
 import edu.scut.luluteam.ubclibrary.collection.model.UBCGeoFence;
 import edu.scut.luluteam.ubclibrary.collection.model.UBCLocation;
-import edu.scut.luluteam.ubclibrary.collection.presenter.IPresenter;
+import edu.scut.luluteam.ubclibrary.collection.model.UBCUsageStats;
+import edu.scut.luluteam.ubclibrary.collection.presenter.IOnLocationPresenter;
 import edu.scut.luluteam.ubclibrary.collection.view.IGeoFenceView;
+import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
 /**
  * @author Guan
  * @date Created on 2018/4/2
  */
-public class Presenter implements IPresenter {
+public class OnLocationOnLocationPresenter implements IOnLocationPresenter {
 
     private UBCGeoFence geoFence;
 
     private IGeoFenceView view;
-    private GeoFenceHandler mHandler;
+    private GeoFenceHandler geoFenceHandler;
     private UBCLocation ubcLocation;
 
+    private static OnLocationOnLocationPresenter mOnLocationPresenter;
 
-    public Presenter(IGeoFenceView view) {
+    public static OnLocationOnLocationPresenter getInstance(IGeoFenceView view)
+    {
+        if (mOnLocationPresenter ==null)
+        {
+            synchronized (OnLocationOnLocationPresenter.class)
+            {
+                if (mOnLocationPresenter ==null)
+                {
+                    mOnLocationPresenter =new OnLocationOnLocationPresenter(view);
+                }
+            }
+        }
+        return mOnLocationPresenter;
+    }
+
+
+
+    private OnLocationOnLocationPresenter(IGeoFenceView view) {
         this.view = view;
-        mHandler = new GeoFenceHandler(this.view);
+        geoFenceHandler = new GeoFenceHandler(this.view);
         geoFence = new UBCGeoFence(this);
         ubcLocation = new UBCLocation(this);
     }
@@ -46,6 +66,12 @@ public class Presenter implements IPresenter {
         geoFence.stop();
     }
 
+    public void statsAppUsage()
+    {
+        UBCUsageStats usageStats=new UBCUsageStats(AppHolder.appContext);
+        usageStats.appStats();
+    }
+
     @Override
     public void onLocationInfo(AMapLocation location) {
         String result = getLocationStr(location);
@@ -57,7 +83,12 @@ public class Presenter implements IPresenter {
         /**
          * 通知service，说已经成功加载 预设的地理围栏
          */
-        mHandler.sendEmptyMessage(0);
+        geoFenceHandler.sendEmptyMessage(0);
+    }
+
+    @Override
+    public void onStatsAppUsage() {
+
     }
 
     public synchronized static String getLocationStr(AMapLocation location) {

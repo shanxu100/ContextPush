@@ -9,13 +9,13 @@ import com.amap.api.location.DPoint;
 
 import java.util.List;
 
-import edu.scut.luluteam.ubclibrary.collection.presenter.IPresenter;
+import edu.scut.luluteam.ubclibrary.collection.presenter.IOnLocationPresenter;
+import edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceService;
 import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
 import static com.amap.api.fence.GeoFenceClient.GEOFENCE_IN;
 import static com.amap.api.fence.GeoFenceClient.GEOFENCE_OUT;
 import static com.amap.api.fence.GeoFenceClient.GEOFENCE_STAYED;
-import static edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceReceiver.GEOFENCE_BROADCAST_ACTION;
 
 /**
  * 判断 位置 与 地理围栏 的关系
@@ -26,13 +26,13 @@ import static edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceReceiver
 public class UBCGeoFence {
 
     private GeoFenceClient mGeoFenceClient;
-    private IPresenter presenter;
+    private IOnLocationPresenter presenter;
 
 
     private static final String TAG = "UBCGeoFence";
 
 
-    public UBCGeoFence(IPresenter presenter) {
+    public UBCGeoFence(IOnLocationPresenter presenter) {
         mGeoFenceClient = new GeoFenceClient(AppHolder.appContext);
         this.presenter = presenter;
 
@@ -56,7 +56,7 @@ public class UBCGeoFence {
             }
         });
         //创建并设置PendingIntent
-        mGeoFenceClient.createPendingIntent(GEOFENCE_BROADCAST_ACTION);
+        mGeoFenceClient.createPendingIntent(GeoFenceService.GeoFenceReceiver.GEOFENCE_BROADCAST_ACTION);
 
     }
 

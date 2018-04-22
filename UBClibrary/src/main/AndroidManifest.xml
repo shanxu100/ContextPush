@@ -11,12 +11,17 @@
             android:name=".collection.view.impl.GeoFenceService"
             android:enabled="true"
             android:exported="false" />
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
 
         <receiver
-            android:name=".collection.view.impl.GeoFenceReceiver"
+            android:name=".collection.view.impl.GeoFenceService$GeoFenceReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
+
+        <service
+            android:name=".collection.view.impl.BehaviorInfoService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

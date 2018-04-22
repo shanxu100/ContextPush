@@ -7,6 +7,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import edu.scut.luluteam.ubclibrary.collection.model.UBCLocation;
+import edu.scut.luluteam.ubclibrary.collection.view.impl.BehaviorInfoService;
 import edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceService;
 import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
@@ -30,8 +31,8 @@ public class UBCNative {
             return;
         }
 
-        Intent geoFenceIntent = new Intent(AppHolder.appContext, GeoFenceService.class);
-        AppHolder.appContext.startService(geoFenceIntent);
+        Intent intent = new Intent(AppHolder.appContext, BehaviorInfoService.class);
+        AppHolder.appContext.startService(intent);
 
     }
 

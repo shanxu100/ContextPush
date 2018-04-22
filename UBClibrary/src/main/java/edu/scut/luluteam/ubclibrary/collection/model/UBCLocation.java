@@ -7,13 +7,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import edu.scut.luluteam.ubclibrary.collection.presenter.IPresenter;
+import edu.scut.luluteam.ubclibrary.collection.presenter.IOnLocationPresenter;
 import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
 /**
@@ -28,9 +22,9 @@ public class UBCLocation {
 
     private static final String TAG = "UBCLocation";
 
-    private IPresenter presenter;
+    private IOnLocationPresenter presenter;
 
-    public UBCLocation(final IPresenter presenter) {
+    public UBCLocation(final IOnLocationPresenter presenter) {
         this.presenter = presenter;
     }
 

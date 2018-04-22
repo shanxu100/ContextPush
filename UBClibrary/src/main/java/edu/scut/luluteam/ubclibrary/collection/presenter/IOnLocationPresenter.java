@@ -6,7 +6,7 @@ import com.amap.api.location.AMapLocation;
  * @author Guan
  * @date Created on 2018/4/2
  */
-public interface IPresenter {
+public interface IOnLocationPresenter {
 
 
     /**
@@ -21,5 +21,7 @@ public interface IPresenter {
      * 成功加载设定的 地理围栏 后，调用这里
      */
     void onFinishedLoadGeoFenceInfo();
+
+    void onStatsAppUsage();
 
 }
