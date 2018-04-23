@@ -1,6 +1,7 @@
 package edu.scut.luluteam.ubclibrary;
 
 import android.app.Application;
+import android.provider.Settings;
 
 import edu.scut.luluteam.ubclibrary.constant.AppHolder;
 
@@ -15,7 +16,11 @@ public class UBCInstance {
 
     private UBCInstance(Application context) {
         AppHolder.appContext = context;
-        ubcNative=new UBCNative();
+        /**
+         * 获取AndroidId，用于标识设备
+         */
+        AppHolder.androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        ubcNative = new UBCNative();
     }
 
 
@@ -23,6 +28,7 @@ public class UBCInstance {
 
     /**
      * SDK 的入口
+     *
      * @param context
      */
     public static void start(Application context) {
@@ -45,8 +51,7 @@ public class UBCInstance {
     /**
      * 真正开始启动SDK的相关程序
      */
-    public void start()
-    {
+    public void start() {
         ubcNative.start();
     }
 

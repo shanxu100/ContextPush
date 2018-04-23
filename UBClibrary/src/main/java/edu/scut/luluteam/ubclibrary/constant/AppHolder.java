@@ -9,6 +9,8 @@ import android.content.Context;
  */
 public class AppHolder {
     public static Context appContext;
+    public static String androidId;
+
     public static final String[] PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,

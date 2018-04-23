@@ -14,12 +14,13 @@ import java.util.List;
 import edu.scut.luluteam.ubclibrary.utils.CheckPermissionUtil;
 
 /**
+ * 统计App使用信息
  * @author Guan
  * @date Created on 2018/4/20
  */
-public class UBCUsageStats {
+public class UBCAppUsageStats {
 
-    private static final String TAG = "UBCUsageStats";
+    private static final String TAG = "UBCAppUsageStats";
     private UsageStatsManager usm;
     private Context context;
 
@@ -28,7 +29,7 @@ public class UBCUsageStats {
         return usm;
     }
 
-    public UBCUsageStats(Context context) {
+    public UBCAppUsageStats(Context context) {
         this.context = context;
         usm = getUsageStatsManager(context);
     }

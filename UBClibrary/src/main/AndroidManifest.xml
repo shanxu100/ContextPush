@@ -18,10 +18,17 @@
             android:enabled="true"
             android:exported="true" />
 
+        <receiver
+            android:name=".collection.view.impl.BehaviorInfoService$DeviceInfoReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <service
             android:name=".collection.view.impl.BehaviorInfoService"
             android:enabled="true"
             android:exported="true"></service>
+
+
     </application>
 
 </manifest>

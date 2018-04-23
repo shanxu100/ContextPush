@@ -30,10 +30,8 @@ public class UBCNative {
         if (!checkRunOnMainThread() || !checkPermission()) {
             return;
         }
-
         Intent intent = new Intent(AppHolder.appContext, BehaviorInfoService.class);
         AppHolder.appContext.startService(intent);
-
     }
 
 

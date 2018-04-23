@@ -12,7 +12,7 @@ import android.util.Log;
 
 import com.amap.api.fence.GeoFence;
 
-import edu.scut.luluteam.ubclibrary.collection.presenter.impl.OnLocationOnLocationPresenter;
+import edu.scut.luluteam.ubclibrary.collection.presenter.impl.OnLocationPresenter;
 import edu.scut.luluteam.ubclibrary.collection.view.IGeoFenceView;
 
 
@@ -25,12 +25,12 @@ public class GeoFenceService extends Service implements IGeoFenceView {
 
     private GeoFenceReceiver mGeoFenceReceiver;
 
-    private OnLocationOnLocationPresenter onLocationPresenter;
+    private OnLocationPresenter onLocationPresenter;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        onLocationPresenter = OnLocationOnLocationPresenter.getInstance(this);
+        onLocationPresenter = OnLocationPresenter.getInstance(this);
     }
 
     @Override

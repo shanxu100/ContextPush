@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import edu.scut.luluteam.ubclibrary.UBCInstance;
+import edu.scut.luluteam.ubclibrary.collection.view.impl.BehaviorInfoService;
 import edu.scut.luluteam.ubclibrary.collection.view.impl.GeoFenceService;
 
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                LocationManager.getInstance(getApplication()).start();
                 UBCInstance.start(getApplication());
-//                Intent geoFenceIntent = new Intent(getApplicationContext(), GeoFenceService.class);
+//                Intent geoFenceIntent = new Intent(getApplicationContext(), BehaviorInfoService.class);
 //                startService(geoFenceIntent);
 
             }
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 //                LocationManager.getInstance(getApplication()).stop();
 
-                Intent geoFenceIntent = new Intent(getApplicationContext(), GeoFenceService.class);
+                Intent geoFenceIntent = new Intent(getApplicationContext(), BehaviorInfoService.class);
                 stopService(geoFenceIntent);
             }
         });

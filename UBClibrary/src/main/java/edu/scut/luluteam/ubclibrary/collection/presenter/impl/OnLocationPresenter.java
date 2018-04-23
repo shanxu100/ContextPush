@@ -7,7 +7,7 @@ import com.amap.api.location.AMapLocation;
 
 import edu.scut.luluteam.ubclibrary.collection.model.UBCGeoFence;
 import edu.scut.luluteam.ubclibrary.collection.model.UBCLocation;
-import edu.scut.luluteam.ubclibrary.collection.model.UBCUsageStats;
+import edu.scut.luluteam.ubclibrary.collection.model.UBCAppUsageStats;
 import edu.scut.luluteam.ubclibrary.collection.presenter.IOnLocationPresenter;
 import edu.scut.luluteam.ubclibrary.collection.view.IGeoFenceView;
 import edu.scut.luluteam.ubclibrary.constant.AppHolder;
@@ -16,7 +16,7 @@ import edu.scut.luluteam.ubclibrary.constant.AppHolder;
  * @author Guan
  * @date Created on 2018/4/2
  */
-public class OnLocationOnLocationPresenter implements IOnLocationPresenter {
+public class OnLocationPresenter implements IOnLocationPresenter {
 
     private UBCGeoFence geoFence;
 
@@ -24,17 +24,17 @@ public class OnLocationOnLocationPresenter implements IOnLocationPresenter {
     private GeoFenceHandler geoFenceHandler;
     private UBCLocation ubcLocation;
 
-    private static OnLocationOnLocationPresenter mOnLocationPresenter;
+    private static OnLocationPresenter mOnLocationPresenter;
 
-    public static OnLocationOnLocationPresenter getInstance(IGeoFenceView view)
+    public static OnLocationPresenter getInstance(IGeoFenceView view)
     {
         if (mOnLocationPresenter ==null)
         {
-            synchronized (OnLocationOnLocationPresenter.class)
+            synchronized (OnLocationPresenter.class)
             {
                 if (mOnLocationPresenter ==null)
                 {
-                    mOnLocationPresenter =new OnLocationOnLocationPresenter(view);
+                    mOnLocationPresenter =new OnLocationPresenter(view);
                 }
             }
         }
@@ -43,7 +43,7 @@ public class OnLocationOnLocationPresenter implements IOnLocationPresenter {
 
 
 
-    private OnLocationOnLocationPresenter(IGeoFenceView view) {
+    private OnLocationPresenter(IGeoFenceView view) {
         this.view = view;
         geoFenceHandler = new GeoFenceHandler(this.view);
         geoFence = new UBCGeoFence(this);
@@ -66,11 +66,6 @@ public class OnLocationOnLocationPresenter implements IOnLocationPresenter {
         geoFence.stop();
     }
 
-    public void statsAppUsage()
-    {
-        UBCUsageStats usageStats=new UBCUsageStats(AppHolder.appContext);
-        usageStats.appStats();
-    }
 
     @Override
     public void onLocationInfo(AMapLocation location) {
