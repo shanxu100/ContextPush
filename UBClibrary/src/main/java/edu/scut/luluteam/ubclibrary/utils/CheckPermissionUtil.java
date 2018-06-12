@@ -34,6 +34,7 @@ public class CheckPermissionUtil {
     /**
      * 检查 系统App 拥有的权限
      * 如：android:get_usage_stats
+     * 即：AppOpsManager.OPSTR_GET_USAGE_STATS
      *
      * @param context
      * @param op

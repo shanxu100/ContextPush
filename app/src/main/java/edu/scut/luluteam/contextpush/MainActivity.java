@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
             int mode = 0;
-            mode = appOps.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), getPackageName());
+            mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), getPackageName());
             boolean granted = mode == AppOpsManager.MODE_ALLOWED;
             if (!granted) {
                 Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             AppOpsManager appOps = (AppOpsManager) getSystemService(Context.APP_OPS_SERVICE);
             int mode = 0;
-            mode = appOps.checkOpNoThrow("android:get_usage_stats", android.os.Process.myUid(), getPackageName());
+            mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), getPackageName());
             boolean granted = mode == AppOpsManager.MODE_ALLOWED;
             if (!granted) {
                 Toast.makeText(this, "请开启该权限", Toast.LENGTH_SHORT).show();
